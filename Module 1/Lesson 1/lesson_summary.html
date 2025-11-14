@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1 Lesson 1 - Lesson Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .module-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1e3a5f;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .module-intro {
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #1e3a5f 0%, #2a5082 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .topic-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(30, 58, 95, 0.2);
+            border-color: #1e3a5f;
+        }
+
+        .topic-emoji {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .topic-title {
+            color: #1e3a5f;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .topic-description {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2a5082 100%);
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 1;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-objective {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .modal-objective-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .modal-body {
+            padding: 30px;
+            max-height: calc(90vh - 180px);
+            overflow-y: auto;
+        }
+
+        .summary-content {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.8;
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #1e3a5f;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .module-container {
+                padding: 25px;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-header, .modal-objective, .modal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="module-container">
+        <h1>Module 1 - Lesson 1: Lesson Summary</h1>
+        <p class="module-intro">Click each card to explore the key concepts and requirements covered in this lesson:</p>
+
+        <div class="topics-grid">
+            <!-- Topic 1: Legislative Journey -->
+            <div class="topic-card" onclick="openModal(0)">
+                <span class="topic-emoji">📜</span>
+                <h3 class="topic-title">Legislative Journey</h3>
+                <p class="topic-description">Trace the MPP from its FY1991 pilot origins to its current permanent authority under 10 U.S.C. § 4902.</p>
+            </div>
+
+            <!-- Topic 2: Legal Authority -->
+            <div class="topic-card" onclick="openModal(1)">
+                <span class="topic-emoji">⚖️</span>
+                <h3 class="topic-title">Legal Authority</h3>
+                <p class="topic-description">Identify the legal authority (10 U.S.C. § 4902) and implementing regulation (DFARS Appendix I) for the MPP.</p>
+            </div>
+
+            <!-- Topic 3: Developmental Assistance -->
+            <div class="topic-card" onclick="openModal(2)">
+                <span class="topic-emoji">🎯</span>
+                <h3 class="topic-title">Developmental Assistance</h3>
+                <p class="topic-description">Explain the purpose of approved developmental assistance and how MPAs are structured to enhance Protégé capabilities.</p>
+            </div>
+
+            <!-- Topic 4: Success Metrics -->
+            <div class="topic-card" onclick="openModal(3)">
+                <span class="topic-emoji">📊</span>
+                <h3 class="topic-title">Success Metrics</h3>
+                <p class="topic-description">Describe the four success metrics in DFARS Appendix I-100(c), including the five-year measurement window after agreement completion.</p>
+            </div>
+
+            <!-- Topic 5: Participation Mechanisms -->
+            <div class="topic-card" onclick="openModal(4)">
+                <span class="topic-emoji">🤝</span>
+                <h3 class="topic-title">Participation Mechanisms</h3>
+                <p class="topic-description">Distinguish the two participation mechanisms for Mentors—reimbursable and credit—and where each is governed in DFARS Appendix I.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title">Learning Objective</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-objective">
+                <p class="modal-objective-text" id="modalObjectiveText"></p>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const objectivesData = [
+            // 0. Legislative Journey
+            {
+                objective: "Trace the MPP from its FY1991 pilot origins to its current permanent authority under 10 U.S.C. § 4902.",
+                summary: "The MPP began as a pilot program in FY1991 under Section 831 of the NDAA to incentivize major DoD contractors to assist eligible small businesses. The program was codified as permanent authority under 10 U.S.C. § 4902 with the NDAA 2023, transitioning from a temporary pilot to a permanent fixture in the defense industrial base."
+            },
+            // 1. Legal Authority
+            {
+                objective: "Identify the legal authority (10 U.S.C. § 4902) and implementing regulation (DFARS Appendix I) for the MPP.",
+                summary: "The MPP derives its legal authority from 10 U.S.C. § 4902, which formally established this congressionally mandated initiative. DFARS Appendix I serves as the implementing regulation, translating the legal mandate into detailed policies and procedures for program operation and oversight."
+            },
+            // 2. Developmental Assistance
+            {
+                objective: "Explain the purpose of approved developmental assistance and how MPAs are structured to enhance Protégé capabilities.",
+                summary: "Developmental assistance aims to enhance a Protégé firm's capabilities and improve its ability to successfully perform under contracts or subcontracts. MPAs are structured following a preliminary assessment of the Protégé's developmental needs, with assistance encompassing business management, technical support, technology transfer, subcontracts, and financial aid, all designed to address critical gaps in the defense industrial base."
+            },
+            // 3. Success Metrics
+            {
+                objective: "Describe the four success metrics in DFARS Appendix I-100(c), including the five-year measurement window after agreement completion.",
+                summary: "The four success metrics include: increased dollar value of contracts and subcontracts awarded to Protégé firms, increased number and value of Mentor subcontracts to Protégés, increased Protégé participation in DoD science and technology programs, and growth in job creation. These metrics are evaluated over a five-year period following agreement completion to assess long-term program impact."
+            },
+            // 4. Participation Mechanisms
+            {
+                objective: "Distinguish the two participation mechanisms for Mentors—reimbursable and credit—and where each is governed in DFARS Appendix I.",
+                summary: "Reimbursable agreements (governed by DFARS Appendix I, Section I-109) allow Mentors to receive direct compensation for eligible developmental assistance costs. Credit agreements (governed by DFARS Appendix I, Sections I-110, I-110.1, and I-110.2) allow Mentors to count approved developmental assistance costs toward their small business subcontracting goals rather than receiving direct payment."
+            }
+        ];
+
+        function openModal(index) {
+            const data = objectivesData[index];
+
+            document.getElementById('modalObjectiveText').textContent = data.objective;
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `<div class="summary-content">${data.summary}</div>`;
+
+            document.getElementById('modalOverlay').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (!event || event.target.id === 'modalOverlay' || event.target.classList.contains('modal-close')) {
+                document.getElementById('modalOverlay').classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
