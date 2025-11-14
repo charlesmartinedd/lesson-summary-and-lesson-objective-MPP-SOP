@@ -1,22 +1,27 @@
-# Environment variables
-.env
+# PDFs and Excel files
+*.pdf
+*.xlsx
+*.xls
 
-# Python
+# Python scripts (keep in local development only)
+*.py
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-venv/
-env/
-ENV/
+*.pyc
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
+# JSON logs and data files
+generation_log.json
+dual_verification_log.json
+verification_log.json
+generated_titles.json
 
-# OS
+# Markdown reports
+*_REPORT.md
+GENERATION_*.md
+
+# Environment files
+.env
+*.env
+
+# OS files
 .DS_Store
 Thumbs.db

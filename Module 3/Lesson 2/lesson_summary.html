@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3 Lesson 2 - Lesson Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .module-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1e3a5f;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .module-intro {
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #1e3a5f 0%, #2a5082 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .topic-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(30, 58, 95, 0.2);
+            border-color: #1e3a5f;
+        }
+
+        .topic-emoji {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .topic-title {
+            color: #1e3a5f;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .topic-description {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2a5082 100%);
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 1;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-objective {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .modal-objective-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .modal-body {
+            padding: 30px;
+            max-height: calc(90vh - 180px);
+            overflow-y: auto;
+        }
+
+        .summary-content {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.8;
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #1e3a5f;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .module-container {
+                padding: 25px;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-header, .modal-objective, .modal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="module-container">
+        <h1>Module 3 - Lesson 2: Lesson Summary</h1>
+        <p class="module-intro">Click each card to explore the key concepts and requirements covered in this lesson:</p>
+
+        <div class="topics-grid">
+            <!-- Topic 1 -->
+            <div class="topic-card" onclick="openModal(0)">
+                <span class="topic-emoji">📜</span>
+                <h3 class="topic-title">Eligibility Confirmation Process</h3>
+                <p class="topic-description">Confirm Mentor and Protégé eligibility in accordance with DFARS Appendix I-104 and I-105 before an agreement submission moves forward.</p>
+            </div>
+            <!-- Topic 2 -->
+            <div class="topic-card" onclick="openModal(1)">
+                <span class="topic-emoji">⚖️</span>
+                <h3 class="topic-title">Submission Package Review</h3>
+                <p class="topic-description">Review submission packages for completeness and compliance, ensuring all required certifications, cost estimates, and supporting documentation are present.</p>
+            </div>
+            <!-- Topic 3 -->
+            <div class="topic-card" onclick="openModal(2)">
+                <span class="topic-emoji">🎯</span>
+                <h3 class="topic-title">Agreement Types & Compliance</h3>
+                <p class="topic-description">Differentiate the approval authorities for reimbursable, credit, and hybrid agreements, and verify that routing aligns with SOP Chapter 6 and DFARS Appendix I-108.</p>
+            </div>
+            <!-- Topic 4 -->
+            <div class="topic-card" onclick="openModal(3)">
+                <span class="topic-emoji">📊</span>
+                <h3 class="topic-title">Program Participation Rules</h3>
+                <p class="topic-description">Monitor program participation rules, including single agreement participation, the five-year cap, and the non-affiliation safeguard under SBA rules.</p>
+            </div>
+            <!-- Topic 5 -->
+            <div class="topic-card" onclick="openModal(4)">
+                <span class="topic-emoji">🤝</span>
+                <h3 class="topic-title">Pre-Approval Cost Prevention</h3>
+                <p class="topic-description">Verify that no developmental assistance costs are incurred until all required approvals and contract actions are formally executed.</p>
+            </div>
+            <!-- Topic 6 -->
+            <div class="topic-card" onclick="openModal(5)">
+                <span class="topic-emoji">🔍</span>
+                <h3 class="topic-title">Proactive Mentor Guidance</h3>
+                <p class="topic-description">Provide proactive guidance to Mentors throughout the proposal development and submission process to minimize delays and ensure compliance.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title">Learning Objective</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-objective">
+                <p class="modal-objective-text" id="modalObjectiveText"></p>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const objectivesData = [
+            // 0. Confirm Mentor and Protégé...
+            {
+                        "objective": "Confirm Mentor and Protégé eligibility in accordance with DFARS Appendix I-104 and I-105 before an agreement submission moves forward.",
+                        "summary": "Program Managers must confirm Mentor eligibility under DFARS Appendix I-104, ensuring they are financially sound large businesses with favorable performance, capable of providing developmental assistance. Concurrently, Prot\ég\és must meet DFARS I-105 requirements, verifying they are certified small businesses in specific socio-economic categories (e.g., SDB, WOSB) and eligible for federal contracts. This crucial upfront vetting, guided by MPP SOP Chapter 4, prevents agreement rejection and ensures program compliance before submission."
+            },            // 1. Review submission packages for...
+            {
+                        "objective": "Review submission packages for completeness and compliance, ensuring all required certifications, cost estimates, and supporting documentation are present.",
+                        "summary": "As a Program Manager, you must thoroughly review submission packages for completeness and compliance as outlined in MPP SOP Chapters 6.3.2 and 6.4.1, ensuring all required internal forms, cost estimates, and supporting documentation are accurately present. This review is critical to also ensure full compliance with DFARS Appendix I Sections I-108, which mandates the presence of accurate certifications\—particularly for cost or pricing data\—to protect government interests and facilitate a proper, auditable review."
+            },            // 2. Differentiate the approval authorities...
+            {
+                        "objective": "Differentiate the approval authorities for reimbursable, credit, and hybrid agreements, and verify that routing aligns with SOP Chapter 6 and DFARS Appendix I-108.",
+                        "summary": "Differentiate the approval authorities for reimbursable, credit, and hybrid agreements, and verify that routing aligns with SOP Chapter 6 and DFARS Appendix I-108."
+            },            // 3. SBA Program Participation Rules
+            {
+                        "objective": "Monitor program participation rules, including single agreement participation, the five-year cap, and the non-affiliation safeguard under SBA rules.",
+                        "summary": "As a Program Manager, you must diligently monitor participant adherence to core program rules, ensuring entities maintain single agreement participation and do not exceed the five-year participation cap. Additionally, you are responsible for verifying they satisfy SBA's non-affiliation safeguard, which prevents larger or affiliated entities from circumventing eligibility requirements designed for genuine small businesses and ensures fair program access. These safeguards are critical for maintaining program integrity and compliance as outlined in MPP SOP Chapter 4 and DFARS Appendix I."
+            },            // 4. Verify that no developmental...
+            {
+                        "objective": "Verify that no developmental assistance costs are incurred until all required approvals and contract actions are formally executed.",
+                        "summary": "Program Managers must verify that no developmental assistance costs are incurred until all required internal approvals and formal contract actions are fully executed and funded, as mandated by MPP SOP Chapter 6.4. This ensures compliance with DFARS Appendix I Sections I-109 and I-110.1, preventing unauthorized commitments and safeguarding the government from liability by confirming official obligation authority and fund availability before work begins."
+            },            // 5. Provide proactive guidance to...
+            {
+                        "objective": "Provide proactive guidance to Mentors throughout the proposal development and submission process to minimize delays and ensure compliance.",
+                        "summary": "Drawing from MPP SOP Chapters 3.4 and 6, this objective mandates actively supporting Mentors from the outset of proposal development. This proactive engagement, providing clear guidance and resources, is crucial to minimize delays in the submission process. It also ensures Mentors fully understand and meet all program and compliance requirements, avoiding issues identified during the review process (Chapter 6) and fulfilling their responsibilities (Chapter 3.4)."
+            }
+        ];
+
+        function openModal(index) {
+            const data = objectivesData[index];
+
+            document.getElementById('modalObjectiveText').textContent = data.objective;
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `<div class="summary-content">${data.summary}</div>`;
+
+            document.getElementById('modalOverlay').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (!event || event.target.id === 'modalOverlay' || event.target.classList.contains('modal-close')) {
+                document.getElementById('modalOverlay').classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

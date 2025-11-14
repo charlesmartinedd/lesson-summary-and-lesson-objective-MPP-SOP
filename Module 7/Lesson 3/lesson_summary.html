@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 7 Lesson 3 - Lesson Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .module-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1e3a5f;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .module-intro {
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #1e3a5f 0%, #2a5082 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .topic-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(30, 58, 95, 0.2);
+            border-color: #1e3a5f;
+        }
+
+        .topic-emoji {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .topic-title {
+            color: #1e3a5f;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .topic-description {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2a5082 100%);
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 1;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-objective {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .modal-objective-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .modal-body {
+            padding: 30px;
+            max-height: calc(90vh - 180px);
+            overflow-y: auto;
+        }
+
+        .summary-content {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.8;
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #1e3a5f;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .module-container {
+                padding: 25px;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-header, .modal-objective, .modal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="module-container">
+        <h1>Module 7 - Lesson 3: Lesson Summary</h1>
+        <p class="module-intro">Click each card to explore the key concepts and requirements covered in this lesson:</p>
+
+        <div class="topics-grid">
+            <!-- Topic 1 -->
+            <div class="topic-card" onclick="openModal(0)">
+                <span class="topic-emoji">📜</span>
+                <h3 class="topic-title">MPA Subcontracting Confirmation</h3>
+                <p class="topic-description">Confirm that subcontracting under an MPA is an authorized form of developmental assistance, properly documented, and aligned with the Protégé's capacity.</p>
+            </div>
+            <!-- Topic 2 -->
+            <div class="topic-card" onclick="openModal(1)">
+                <span class="topic-emoji">⚖️</span>
+                <h3 class="topic-title">Subcontracting Integration</h3>
+                <p class="topic-description">Ensure subcontracting is integrated with other forms of assistance and does not duplicate routine subcontract administration.</p>
+            </div>
+            <!-- Topic 3 -->
+            <div class="topic-card" onclick="openModal(2)">
+                <span class="topic-emoji">🎯</span>
+                <h3 class="topic-title">Subcontracting Reporting Accuracy</h3>
+                <p class="topic-description">Verify that subcontracting is reported accurately in required reviews and semiannual reports, including the number and dollar value of Protégé subcontracts.</p>
+            </div>
+            <!-- Topic 4 -->
+            <div class="topic-card" onclick="openModal(3)">
+                <span class="topic-emoji">📊</span>
+                <h3 class="topic-title">Subcontracting Developmental Oversight</h3>
+                <p class="topic-description">Apply oversight to ensure subcontracting activities are tied to measurable developmental objectives and contribute to Protégé independence.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title">Learning Objective</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-objective">
+                <p class="modal-objective-text" id="modalObjectiveText"></p>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const objectivesData = [
+            // 0. Confirm that subcontracting under...
+            {
+                        "objective": "Confirm that subcontracting under an MPA is an authorized form of developmental assistance, properly documented, and aligned with the Protégé's capacity.",
+                        "summary": "Subcontracting under a Mentor-Prot\ég\é Agreement (MPA) is an authorized and key form of developmental assistance for Prot\ég\és, as outlined in DFARS Appendix I. The MPA's developmental assistance plan, per MPP SOP Chapter 6.3 and DFARS Appendix I Sections I-107/I-110.1(a), must properly document these subcontracts, ensuring they are strategically aligned with the Prot\ég\é's existing capacity to foster growth, not overwhelm them."
+            },            // 1. Ensure subcontracting is integrated...
+            {
+                        "objective": "Ensure subcontracting is integrated with other forms of assistance and does not duplicate routine subcontract administration.",
+                        "summary": "Program Managers must ensure subcontracting efforts are cohesive with all other forms of program assistance to achieve overall program objectives efficiently. This means avoiding redundant administrative tasks by clearly defining responsibilities and leveraging existing oversight mechanisms to prevent duplication of routine subcontract administration. Ultimately, this promotes effective resource utilization and streamlined project execution across all funding streams."
+            },            // 2. Verify that subcontracting is...
+            {
+                        "objective": "Verify that subcontracting is reported accurately in required reviews and semiannual reports, including the number and dollar value of Protégé subcontracts.",
+                        "summary": "As a Program Manager, you must meticulously verify that all required subcontracting data, especially the number and dollar value of Prot\ég\é subcontracts, is accurately reflected in semiannual reports and during program reviews. This is critical for demonstrating compliance with your Mentor-Prot\ég\é Agreement and ensuring transparent oversight by the government, as stipulated in MPP SOP Chapters 3.9.3, 3.9.4, 7.3.3 and DFARS Appendix I Sections I-112, I-113. Accurate reporting validates program performance and ensures all contractual obligations are met."
+            },            // 3. Apply oversight to ensure...
+            {
+                        "objective": "Apply oversight to ensure subcontracting activities are tied to measurable developmental objectives and contribute to Protégé independence.",
+                        "summary": "As a Program Manager, you must actively oversee subcontracting activities to ensure they are directly linked to the Prot\ég\é's specific, approved developmental goals, such as improving technical capabilities or business management. These objectives must be measurable, allowing you to track the Prot\ég\é's progress towards becoming a self-sufficient, competitive entity capable of operating independently and transitioning out of the program."
+            }
+        ];
+
+        function openModal(index) {
+            const data = objectivesData[index];
+
+            document.getElementById('modalObjectiveText').textContent = data.objective;
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `<div class="summary-content">${data.summary}</div>`;
+
+            document.getElementById('modalOverlay').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (!event || event.target.id === 'modalOverlay' || event.target.classList.contains('modal-close')) {
+                document.getElementById('modalOverlay').classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

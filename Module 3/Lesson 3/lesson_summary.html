@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3 Lesson 3 - Lesson Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .module-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1e3a5f;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .module-intro {
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #1e3a5f 0%, #2a5082 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .topic-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(30, 58, 95, 0.2);
+            border-color: #1e3a5f;
+        }
+
+        .topic-emoji {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .topic-title {
+            color: #1e3a5f;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .topic-description {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2a5082 100%);
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 1;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-objective {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .modal-objective-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .modal-body {
+            padding: 30px;
+            max-height: calc(90vh - 180px);
+            overflow-y: auto;
+        }
+
+        .summary-content {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.8;
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #1e3a5f;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .module-container {
+                padding: 25px;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-header, .modal-objective, .modal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="module-container">
+        <h1>Module 3 - Lesson 3: Lesson Summary</h1>
+        <p class="module-intro">Click each card to explore the key concepts and requirements covered in this lesson:</p>
+
+        <div class="topics-grid">
+            <!-- Topic 1 -->
+            <div class="topic-card" onclick="openModal(0)">
+                <span class="topic-emoji">📜</span>
+                <h3 class="topic-title">Compliance Monitoring Requirements</h3>
+                <p class="topic-description">Ensure compliance by monitoring semiannual Mentor reports and annual Protégé data submissions in accordance with DFARS Appendix I-112.2.</p>
+            </div>
+            <!-- Topic 2 -->
+            <div class="topic-card" onclick="openModal(1)">
+                <span class="topic-emoji">⚖️</span>
+                <h3 class="topic-title">Report Distribution Requirements</h3>
+                <p class="topic-description">Ensure accurate distribution of reports to all required oversight authorities, including OSBP, DCMA, and contracting officers when applicable.</p>
+            </div>
+            <!-- Topic 3 -->
+            <div class="topic-card" onclick="openModal(2)">
+                <span class="topic-emoji">🎯</span>
+                <h3 class="topic-title">Reporting Quality Validation</h3>
+                <p class="topic-description">Validate reporting quality by checking that submissions clearly separate credit from subcontracting awards, apply proper multipliers, and document Protégé outcomes.</p>
+            </div>
+            <!-- Topic 4 -->
+            <div class="topic-card" onclick="openModal(3)">
+                <span class="topic-emoji">📊</span>
+                <h3 class="topic-title">Agreement Adjustment Oversight</h3>
+                <p class="topic-description">Oversee agreement adjustments and terminations to ensure proper documentation, notification, and closure in compliance with the MPP SOP and DFARS Appendix I.</p>
+            </div>
+            <!-- Topic 5 -->
+            <div class="topic-card" onclick="openModal(4)">
+                <span class="topic-emoji">🤝</span>
+                <h3 class="topic-title">Program Reporting Management Tool</h3>
+                <p class="topic-description">Use reporting as a management tool to track Protégé growth, highlight measurable impact, and sustain program credibility.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title">Learning Objective</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-objective">
+                <p class="modal-objective-text" id="modalObjectiveText"></p>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const objectivesData = [
+            // 0. Ensure compliance by monitoring...
+            {
+                        "objective": "Ensure compliance by monitoring semiannual Mentor reports and annual Protégé data submissions in accordance with DFARS Appendix I-112.2.",
+                        "summary": "As a Program Manager, you are required to actively monitor semiannual Mentor reports and annual Prot\ég\é data submissions to ensure strict compliance with the reporting requirements detailed in DFARS Appendix I-112.2. These submissions, guided by MPP SOP Chapters 7.3.2 and 7.3.3, provide essential information on developmental assistance, financial investments, and overall program performance. Your oversight, in accordance with MPP SOP 3.9.4 and DFARS I-113, is crucial to verify program progress, identify any discrepancies, and ensure the Mentor-Prot\ég\é agreement is effectively supporting the Prot\ég\é's development and regulatory adherence."
+            },            // 1. Ensure accurate distribution of...
+            {
+                        "objective": "Ensure accurate distribution of reports to all required oversight authorities, including OSBP, DCMA, and contracting officers when applicable.",
+                        "summary": "This objective requires you, as a Program Manager, to ensure all contractually mandated reports are precisely and promptly delivered to designated oversight bodies. Per MPP SOP Chapters 7.3 (Reporting Requirements) and 3.4.1.6 (Contract Administration), this includes providing specific data to the Office of Small Business Programs (OSBP), Defense Contract Management Agency (DCMA), and the Contracting Officer, to ensure compliance, monitor performance, and verify small business utilization."
+            },            // 2. Validate reporting quality by...
+            {
+                        "objective": "Validate reporting quality by checking that submissions clearly separate credit from subcontracting awards, apply proper multipliers, and document Protégé outcomes.",
+                        "summary": "Program Managers must validate Mentor-Prot\ég\é Program (MPP) submissions by ensuring direct subcontracting awards are distinctly separated from other developmental assistance, and that proper multipliers are applied to accurately calculate credit in accordance with MPP SOP 7.3.2 and DFARS I-112.2. This meticulous reporting, which includes documenting Prot\ég\é outcomes as required by DFARS I-112.1(a), is crucial for preventing misrepresentation of achieved credit and demonstrating the program's true impact and value."
+            },            // 3. Agreement Closeout Procedures
+            {
+                        "objective": "Oversee agreement adjustments and terminations to ensure proper documentation, notification, and closure in compliance with the MPP SOP and DFARS Appendix I.",
+                        "summary": "As Program Manager, you are responsible for overseeing all agreement adjustments, ensuring they are meticulously documented and properly notified in compliance with DFARS Appendix I-110.2 and MPP SOP Chapter 7.5. For terminations, you must strictly follow DFARS Appendix I-111, ensuring timely notifications, comprehensive documentation as per MPP SOP Chapter 3.4.2.5, and proper final closure to mitigate risks and ensure legal compliance."
+            },            // 4. Use reporting as a...
+            {
+                        "objective": "Use reporting as a management tool to track Protégé growth, highlight measurable impact, and sustain program credibility.",
+                        "summary": "Based on MPP SOP Chapters 7.3 and 7.6, using reporting as a management tool requires systematically tracking Prot\ég\é growth through defined metrics and documented outcomes. This data is essential for clearly highlighting the program's measurable impact to stakeholders, which in turn sustains program credibility and informs strategic decisions for continuous improvement and resource allocation."
+            }
+        ];
+
+        function openModal(index) {
+            const data = objectivesData[index];
+
+            document.getElementById('modalObjectiveText').textContent = data.objective;
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `<div class="summary-content">${data.summary}</div>`;
+
+            document.getElementById('modalOverlay').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (!event || event.target.id === 'modalOverlay' || event.target.classList.contains('modal-close')) {
+                document.getElementById('modalOverlay').classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

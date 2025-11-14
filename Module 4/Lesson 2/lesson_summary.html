@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4 Lesson 2 - Lesson Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .module-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1e3a5f;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .module-intro {
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #1e3a5f 0%, #2a5082 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .topic-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(30, 58, 95, 0.2);
+            border-color: #1e3a5f;
+        }
+
+        .topic-emoji {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .topic-title {
+            color: #1e3a5f;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .topic-description {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2a5082 100%);
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 1;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-objective {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .modal-objective-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .modal-body {
+            padding: 30px;
+            max-height: calc(90vh - 180px);
+            overflow-y: auto;
+        }
+
+        .summary-content {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.8;
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #1e3a5f;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .module-container {
+                padding: 25px;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-header, .modal-objective, .modal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="module-container">
+        <h1>Module 4 - Lesson 2: Lesson Summary</h1>
+        <p class="module-intro">Click each card to explore the key concepts and requirements covered in this lesson:</p>
+
+        <div class="topics-grid">
+            <!-- Topic 1 -->
+            <div class="topic-card" onclick="openModal(0)">
+                <span class="topic-emoji">📜</span>
+                <h3 class="topic-title">Two-Step Solicitation Process</h3>
+                <p class="topic-description">Explain the two-step solicitation process (white paper and full proposal) outlined in SOP Chapter 6 and DFARS Appendix I, and describe the Program Manager's role in coordinating timelines and ensuring compliance.</p>
+            </div>
+            <!-- Topic 2 -->
+            <div class="topic-card" onclick="openModal(1)">
+                <span class="topic-emoji">⚖️</span>
+                <h3 class="topic-title">White Paper Evaluation</h3>
+                <p class="topic-description">Evaluate white paper submissions for readiness, verifying that they meet DFARS eligibility requirements, align with mission priorities, and include the critical elements required under SOP Section 6.2.</p>
+            </div>
+            <!-- Topic 3 -->
+            <div class="topic-card" onclick="openModal(2)">
+                <span class="topic-emoji">🎯</span>
+                <h3 class="topic-title">Agreements Performance Structural Requirements</h3>
+                <p class="topic-description">Verify the structural and compliance requirements of agreements in line with DFARS Appendix I-107, including eligibility documentation, developmental planning, and terms of performance.</p>
+            </div>
+            <!-- Topic 4 -->
+            <div class="topic-card" onclick="openModal(3)">
+                <span class="topic-emoji">📊</span>
+                <h3 class="topic-title">Agreement Size Requirements</h3>
+                <p class="topic-description">Identify requirements for agreements of all sizes, including the need for strong cost justifications and supporting documentation when program funds are requested.</p>
+            </div>
+            <!-- Topic 5 -->
+            <div class="topic-card" onclick="openModal(4)">
+                <span class="topic-emoji">🤝</span>
+                <h3 class="topic-title">Full Proposal Assembly</h3>
+                <p class="topic-description">Review and assemble full proposal packages, ensuring that all required components (cover checklist, executive summary, signed agreement, technical and cost proposals, reporting requirements) are present, accurate, and polished before submission.</p>
+            </div>
+            <!-- Topic 6 -->
+            <div class="topic-card" onclick="openModal(5)">
+                <span class="topic-emoji">🔍</span>
+                <h3 class="topic-title">Agreement Finalization Support</h3>
+                <p class="topic-description">Support agreement finalization from RFP to execution, by monitoring negotiations, coordinating revisions, and confirming that no reimbursable or creditable costs may be incurred before written approvals (and for reimbursable agreements, before contract award/modification).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title">Learning Objective</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-objective">
+                <p class="modal-objective-text" id="modalObjectiveText"></p>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const objectivesData = [
+            // 0. Explain the two-step solicitation...
+            {
+                        "objective": "Explain the two-step solicitation process (white paper and full proposal) outlined in SOP Chapter 6 and DFARS Appendix I, and describe the Program Manager's role in coordinating timelines and ensuring compliance.",
+                        "summary": "The two-step solicitation process, detailed in SOP Chapter 6 and DFARS Appendix I, streamlines acquisition by first requesting high-level white papers for initial concept review, followed by inviting only the most promising candidates to submit a comprehensive full proposal. The Program Manager's critical role involves meticulously coordinating timelines for both white paper submission and full proposal invitations, ensuring a fair and efficient process, and rigorously upholding all procedural and regulatory compliance throughout each stage."
+            },            // 1. Evaluate white paper submissions...
+            {
+                        "objective": "Evaluate white paper submissions for readiness, verifying that they meet DFARS eligibility requirements, align with mission priorities, and include the critical elements required under SOP Section 6.2.",
+                        "summary": "As a Program Manager, your evaluation of white paper submissions ensures they are ready for further consideration. This involves verifying that the submitting entity meets DFARS eligibility requirements as specified in Appendix I Sections I-102, the proposed solution directly aligns with our mission priorities, and all critical content elements mandated by SOP Section 6.2 (and supported by Appendix J guidance) are included. This comprehensive review is crucial for identifying viable, compliant, and strategically aligned proposals."
+            },            // 2. Verify the structural and...
+            {
+                        "objective": "Verify the structural and compliance requirements of agreements in line with DFARS Appendix I-107, including eligibility documentation, developmental planning, and terms of performance.",
+                        "summary": "As a Program Manager, you must verify that agreements comply with DFARS Appendix I, Section I-107, which outlines critical structural and performance requirements for non-procurement instruments. This involves meticulously reviewing eligibility documentation, ensuring robust developmental planning aligns with project goals, and establishing clear terms of performance, particularly regarding intellectual property rights and data deliverables. These steps, guided by MPP SOP Chapters 3.9.4 and 7.5.3, ensure agreements are legally sound, protect government interests, and effectively support program objectives from initiation through execution."
+            },            // 3. Identify requirements for agreements...
+            {
+                        "objective": "Identify requirements for agreements of all sizes, including the need for strong cost justifications and supporting documentation when program funds are requested.",
+                        "summary": "For all agreements, regardless of size, robust cost justifications are mandatory to ensure requested program funds are reasonable, allowable, and allocable, as detailed in MPP SOP 6.3.2 and DFARS Appendix I. This critical requirement necessitates comprehensive supporting documentation, as outlined in MPP SOP Chapter 8, to validate every cost element, provide a clear audit trail, and prevent disallowance, thereby demonstrating proper stewardship of funds."
+            },            // 4. Review and assemble full...
+            {
+                        "objective": "Review and assemble full proposal packages, ensuring that all required components (cover checklist, executive summary, signed agreement, technical and cost proposals, reporting requirements) are present, accurate, and polished before submission.",
+                        "summary": "As a Program Manager, ensuring that your full proposal package is meticulously assembled and reviewed is critical for compliance and success. Per MPP SOP Chapter 6.3.2, you must verify all required components\—including the cover checklist, executive summary, signed agreement, technical and cost proposals, and reporting requirements\—are present, accurate, and professionally polished. This thoroughness is essential not only for internal quality control but also to meet the strict submission requirements of DFARS Appendix I Sections I-107 and I-108, which dictate the adequacy and evaluation criteria for government proposals, ultimately impacting your proposal's eligibility and competitive standing."
+            },            // 5. Support agreement finalization from...
+            {
+                        "objective": "Support agreement finalization from RFP to execution, by monitoring negotiations, coordinating revisions, and confirming that no reimbursable or creditable costs may be incurred before written approvals (and for reimbursable agreements, before contract award/modification).",
+                        "summary": "As a Program Manager, your crucial role in agreement finalization involves actively monitoring negotiations and coordinating revisions to develop comprehensive and mutually acceptable terms. Critically, you must confirm that no reimbursable or creditable costs are incurred *prior* to securing all necessary written approvals. For reimbursable agreements specifically, this also means ensuring no costs are incurred before the supporting contract award or modification, which is a key requirement stemming from MPP SOP and DFARS to prevent unauthorized obligations and ensure financial integrity."
+            }
+        ];
+
+        function openModal(index) {
+            const data = objectivesData[index];
+
+            document.getElementById('modalObjectiveText').textContent = data.objective;
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `<div class="summary-content">${data.summary}</div>`;
+
+            document.getElementById('modalOverlay').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (!event || event.target.id === 'modalOverlay' || event.target.classList.contains('modal-close')) {
+                document.getElementById('modalOverlay').classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

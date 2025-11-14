@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3 Lesson 1 - Lesson Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .module-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1e3a5f;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .module-intro {
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #1e3a5f 0%, #2a5082 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .topic-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(30, 58, 95, 0.2);
+            border-color: #1e3a5f;
+        }
+
+        .topic-emoji {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .topic-title {
+            color: #1e3a5f;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .topic-description {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2a5082 100%);
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 1;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-objective {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .modal-objective-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .modal-body {
+            padding: 30px;
+            max-height: calc(90vh - 180px);
+            overflow-y: auto;
+        }
+
+        .summary-content {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.8;
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #1e3a5f;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .module-container {
+                padding: 25px;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-header, .modal-objective, .modal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="module-container">
+        <h1>Module 3 - Lesson 1: Lesson Summary</h1>
+        <p class="module-intro">Click each card to explore the key concepts and requirements covered in this lesson:</p>
+
+        <div class="topics-grid">
+            <!-- Topic 1 -->
+            <div class="topic-card" onclick="openModal(0)">
+                <span class="topic-emoji">📜</span>
+                <h3 class="topic-title">Agreement Types & Compliance</h3>
+                <p class="topic-description">Differentiate between Reimbursable, Credit, and Hybrid agreements, including their compliance rules and limitations.</p>
+            </div>
+            <!-- Topic 2 -->
+            <div class="topic-card" onclick="openModal(1)">
+                <span class="topic-emoji">⚖️</span>
+                <h3 class="topic-title">Pre-Cost Approval Requirements</h3>
+                <p class="topic-description">Identify the approval and contract actions required before costs may be incurred under each agreement type.</p>
+            </div>
+            <!-- Topic 3 -->
+            <div class="topic-card" onclick="openModal(2)">
+                <span class="topic-emoji">🎯</span>
+                <h3 class="topic-title">Reimbursable Financial Controls</h3>
+                <p class="topic-description">Explain the financial ceilings, restrictions, and risk considerations for reimbursable agreements.</p>
+            </div>
+            <!-- Topic 4 -->
+            <div class="topic-card" onclick="openModal(3)">
+                <span class="topic-emoji">📊</span>
+                <h3 class="topic-title">Credit Multiplier Monitoring</h3>
+                <p class="topic-description">Monitor the credit multipliers and limits for credit agreements, including conditions for reductions.</p>
+            </div>
+            <!-- Topic 5 -->
+            <div class="topic-card" onclick="openModal(4)">
+                <span class="topic-emoji">🤝</span>
+                <h3 class="topic-title">Mentor-Protégé Reporting Requirements</h3>
+                <p class="topic-description">Outline the reporting requirements and distribution paths for semi-annual Mentor and annual Protégé reporting.</p>
+            </div>
+            <!-- Topic 6 -->
+            <div class="topic-card" onclick="openModal(5)">
+                <span class="topic-emoji">🔍</span>
+                <h3 class="topic-title">MPA Termination Provisions</h3>
+                <p class="topic-description">Recognize the termination provisions and continuing obligations under an MPA.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title">Learning Objective</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-objective">
+                <p class="modal-objective-text" id="modalObjectiveText"></p>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const objectivesData = [
+            // 0. Agreement Types & Compliance
+            {
+                        "objective": "Differentiate between Reimbursable, Credit, and Hybrid agreements, including their compliance rules and limitations.",
+                        "summary": "Reimbursable agreements require your activity to expend funds first and then seek repayment for actual costs, necessitating meticulous cost documentation and strict adherence to the bona fide need rule. Credit agreements involve receiving funds upfront as deposits or advances, which demands specific statutory authority for advance payments and rigorous fund segregation. Hybrid agreements combine elements of both, requiring adherence to the distinct compliance rules and limitations pertinent to each funding component within the same agreement, particularly concerning proper justification for any advanced funds."
+            },            // 1. Pre-Cost Contract Approvals
+            {
+                        "objective": "Identify the approval and contract actions required before costs may be incurred under each agreement type.",
+                        "summary": "Program Managers must ensure all costs are incurred only after a Contracting Officer (CO) has provided official authorization through a signed contract, modification, or other legally binding agreement. For specific scenarios, such as undefinitized contractual actions or pre-award activities, explicit written authorization to proceed from the CO is mandatory before any expenses are obligated. This strict adherence ensures proper funding authorization and prevents unauthorized commitments under any agreement type."
+            },            // 2. Reimbursable Financial Risk Controls
+            {
+                        "objective": "Explain the financial ceilings, restrictions, and risk considerations for reimbursable agreements.",
+                        "summary": "For reimbursable agreements, DFARS I-109 establishes strict financial ceilings, meaning your program cannot obligate or spend beyond the specific funds committed by the requesting agency. The primary restriction is that you must meticulously manage costs to avoid exceeding these authorized funds. Failing to do so creates a significant financial risk, as your agency would incur unrecoverable expenses for any amounts spent beyond the requesting agency's agreed-upon ceiling."
+            },            // 3. Credit Multiplier Limit Monitoring
+            {
+                        "objective": "Monitor the credit multipliers and limits for credit agreements, including conditions for reductions.",
+                        "summary": "Program Managers must monitor credit multipliers, which allow spending with specific small business categories (e.g., SDB, WOSB) to count for more than face value towards your subcontracting goals. However, DFARS sets limits on the total credit that can be earned, and this credit can be reduced if the contractor fails to meet specific conditions like timely reporting or demonstrating a good faith effort to achieve other plan goals. This ensures compliance and maximizes credit while preventing overreliance on a few highly-multiplied subcontractors."
+            },            // 4. Mentor Protégé Reporting Process
+            {
+                        "objective": "Outline the reporting requirements and distribution paths for semi-annual Mentor and annual Protégé reporting.",
+                        "summary": "Mentors are required to submit semi-annual reports detailing the assistance provided, costs incurred, and progress towards the approved Mentor-Prot\ég\é agreement objectives. Prot\ég\és, in turn, must provide annual reports outlining their developmental progress, capabilities gained, and subcontracting activities, as outlined in their development plan. Both reports are primarily submitted to the cognizant Contracting Officer and/or Program Manager, who then forwards them to the agency's Mentor-Prot\ég\é Program Office and, for DoD, uploads them into the electronic Mentor Prot\ég\é Reporting System (eMPRS) for comprehensive program oversight and compliance verification."
+            },            // 5. MPA Termination and Continuing Obligations
+            {
+                        "objective": "Recognize the termination provisions and continuing obligations under an MPA.",
+                        "summary": "Program Managers must understand that an MPA can be terminated by either party, whether for government convenience or contractor default, necessitating adherence to specific procedures outlined in MPP SOP Chapter 7.3.4 for effective contract closure. Crucially, specific continuing obligations persist post-termination, such as safeguarding government data rights, managing intellectual property, and ensuring proper records management, as detailed in MPP SOP Chapter 8.4 and DFARS Appendix I Section I-111."
+            }
+        ];
+
+        function openModal(index) {
+            const data = objectivesData[index];
+
+            document.getElementById('modalObjectiveText').textContent = data.objective;
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `<div class="summary-content">${data.summary}</div>`;
+
+            document.getElementById('modalOverlay').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (!event || event.target.id === 'modalOverlay' || event.target.classList.contains('modal-close')) {
+                document.getElementById('modalOverlay').classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
