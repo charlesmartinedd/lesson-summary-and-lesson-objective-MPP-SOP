@@ -11,7 +11,11 @@ from google.genai import types
 import os
 
 # Configuration
-GOOGLE_API_KEY = 'AIzaSyCojqFfCCPTalhem7ceRLrr6hfNpqPhaNk'
+# API Key should be set in environment variable GOOGLE_API_KEY
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
+if not GOOGLE_API_KEY:
+    raise ValueError("GOOGLE_API_KEY environment variable not set. Please add it to your .env file.")
+
 FILE_SEARCH_STORE = 'fileSearchStores/mppsopdocumentation-j83n2w5zjn96'
 
 # Initialize client
