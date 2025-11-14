@@ -16,7 +16,6 @@
             background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
             color: #e5e7eb;
             min-height: 100vh;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
         }
@@ -32,9 +31,6 @@
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .header h1 {
@@ -50,25 +46,6 @@
             margin-top: 5px;
         }
 
-        .download-btn {
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
-        }
 
         /* Main Content */
         .main-content {
@@ -485,10 +462,6 @@
                 <h1>MPP Lesson Summaries & Objectives</h1>
                 <p class="header-subtitle">DoD Mentor-Protégé Program Training Materials</p>
             </div>
-            <button class="download-btn" onclick="downloadAll()">
-                <span>📥</span>
-                <span>Download All</span>
-            </button>
         </div>
     </div>
 
@@ -711,11 +684,6 @@
                 console.error('Failed to copy:', error);
                 showToast('Failed to copy HTML');
             }
-        }
-
-        // Download all files
-        function downloadAll() {
-            showToast('Download all feature coming soon!');
         }
 
         // Show toast notification
